@@ -36,11 +36,11 @@ abstract class BaseMVPFragment<TView, TPresenter>(private val mvpDelegate: MVPFr
     /**
      * @see [MVPView]
      * */
-    override val mvpTag: Bundle get() = args
+    override val mvpTag: Bundle get() = persistenceArguments
     /**
      * @see [ViewPersistenceStorage]
      * */
-    override val args: Bundle
+    override val persistenceArguments: Bundle
         get() {
             val result = requireNotNull(arguments) { "${this@BaseMVPFragment} must have NOT NULL arguments!" }
             require(result != Bundle.EMPTY) { "${this@BaseMVPFragment} must have NOT EMPTY arguments!" }
