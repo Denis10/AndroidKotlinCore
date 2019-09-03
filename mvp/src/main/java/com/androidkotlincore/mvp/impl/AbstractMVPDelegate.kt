@@ -1,11 +1,12 @@
 package com.androidkotlincore.mvp.impl
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.GenericLifecycleObserver
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import com.androidkotlincore.mvp.*
 import com.androidkotlincore.mvp.addons.CompositeEventListener
 import com.androidkotlincore.mvp.addons.EmitableCompositeEventListener
@@ -29,9 +30,8 @@ import com.androidkotlincore.mvp.impl.permissions.OnRequestPermissionsResultEven
  * @property viewPersistenceStorage - [Bundle] from view with key-value pairs
  * @property presenterId - initial presenter id
  */
-@SuppressLint("RestrictedApi")
 abstract class AbstractMVPDelegate<TPresenter, TView>(private val presentersStorage: PresentersStorage<TPresenter, TView>) :
-        GenericLifecycleObserver,
+        LifecycleObserver,
         MVPView<TView, TPresenter>
 
         where TPresenter : MVPPresenter<TPresenter, TView>,
@@ -112,28 +112,55 @@ abstract class AbstractMVPDelegate<TPresenter, TView>(private val presentersStor
      * @param grantResults - the grant results for the corresponding permissions
      * */
     abstract fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray)
-    ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     /**
-     * @see [GenericLifecycleObserver.onStateChanged]
+     * @see [GenericLifecycleObserver.onStateChanged]. But it is restricted.
      * */
-    override fun onStateChanged(source: androidx.lifecycle.LifecycleOwner, event: Lifecycle.Event) {
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    private fun onCreateEvent() {
+        logEvent(Lifecycle.Event.ON_CREATE)
+        lifecycleEmitter.emit(Lifecycle.Event.ON_CREATE)
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    private fun onStartEvent() {
+        logEvent(Lifecycle.Event.ON_START)
+        attachViewToPresenter()
+        lifecycleEmitter.emit(Lifecycle.Event.ON_START)
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    private fun onResumeEvent() {
+        logEvent(Lifecycle.Event.ON_RESUME)
+        lifecycleEmitter.emit(Lifecycle.Event.ON_RESUME)
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    private fun onPauseEvent() {
+        logEvent(Lifecycle.Event.ON_PAUSE)
+        lifecycleEmitter.emit(Lifecycle.Event.ON_PAUSE)
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    private fun onStopEvent() {
+        logEvent(Lifecycle.Event.ON_STOP)
+        detachViewFromPresenter()
+        lifecycleEmitter.emit(Lifecycle.Event.ON_STOP)
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    private fun onDestroyEvent() {
+        logEvent(Lifecycle.Event.ON_DESTROY)
+        onDestroy()
+        lifecycleEmitter.emit(Lifecycle.Event.ON_DESTROY)
+    }
+
+    private fun logEvent(event: Lifecycle.Event){
         log("#STATE_CHANGED# ${view.javaClass.name} -> $event")
         presenter //presenter must be initialized here
-
-        when (event) {
-            Lifecycle.Event.ON_START -> attachViewToPresenter()
-            Lifecycle.Event.ON_STOP -> detachViewFromPresenter()
-            Lifecycle.Event.ON_DESTROY -> onDestroy()
-            else -> {
-                //do nothing
-            }
-        }
-
-        if (event != Lifecycle.Event.ON_ANY) {
-            lifecycleEmitter.emit(event)
-        }
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Suppress("UNCHECKED_CAST")
     private fun createPresenter(view: MVPView<TView, TPresenter>) = provideInjector(view).createPresenter(view.javaClass, view.mvpTag) as TPresenter
