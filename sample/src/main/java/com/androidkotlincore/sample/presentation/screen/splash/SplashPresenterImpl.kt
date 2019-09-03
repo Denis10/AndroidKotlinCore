@@ -3,9 +3,8 @@ package com.androidkotlincore.sample.presentation.screen.splash
 import android.arch.lifecycle.Lifecycle
 import com.androidkotlincore.mvp.impl.launchCoroutineUI
 import com.androidkotlincore.sample.presentation.base.BasePresenterImpl
-import kotlinx.coroutines.experimental.Job
-import kotlinx.coroutines.experimental.delay
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 
 /**
  * Created by Peter on 05.02.2018.
@@ -35,7 +34,7 @@ class SplashPresenterImpl : BasePresenterImpl<SplashPresenter, SplashView>(), Sp
 
     private suspend fun startLoginScreen() {
         //some long operation
-        delay(2, TimeUnit.SECONDS)
+        delay(2_000)
         //open login screen and finish this screen
         postToView {
             openLoginScreen()

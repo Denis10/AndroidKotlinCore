@@ -1,7 +1,6 @@
 package com.androidkotlincore.mvp.impl
 
-import kotlinx.coroutines.experimental.*
-import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.*
 
 /**
  * Container for subscriptions.
@@ -65,8 +64,8 @@ open class SubscriptionsContainerDelegate : SubscriptionContainer {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-private val WORKER_POOL = CommonPool
-private val UI_POOL = UI
+private val WORKER_POOL = CoroutineScope(Dispatchers.IO)
+private val UI_POOL = CoroutineScope(Dispatchers.Main)
 
 /**
  * Extension to add job into container
@@ -82,26 +81,27 @@ fun Job.bind(subscriptionContainer: SubscriptionContainer): Job {
  * Creates coroutine, which will be automatically added to the subscription container
  */
 fun SubscriptionContainer.launchCoroutineWorker(start: CoroutineStart = CoroutineStart.DEFAULT,
-                                      block: suspend CoroutineScope.() -> Unit): Job =
-        launch(WORKER_POOL, start, block).bind(this)
+                                                block: suspend CoroutineScope.() -> Unit): Job =
+        WORKER_POOL.launch(start = start, block =  block).bind(this)
 
 /**
  * Creates coroutine, which will be automatically added to the subscription container
  */
 fun SubscriptionContainer.launchCoroutineUI(start: CoroutineStart = CoroutineStart.DEFAULT,
                                    block: suspend CoroutineScope.() -> Unit): Job =
-        launch(UI_POOL, start, block).bind(this)
+        UI_POOL.launch(start = start, block =  block).bind(this)
 
 fun <T> SubscriptionContainer.asyncWorker(start: CoroutineStart = CoroutineStart.DEFAULT,
                                     block: suspend CoroutineScope.() -> T): Deferred<T> {
-    val result = async(WORKER_POOL, start, block)
+    val result = WORKER_POOL.async(start = start, block =  block)
     result.bind(this)
     return result
 }
 
 fun <T> SubscriptionContainer.asyncUI(start: CoroutineStart = CoroutineStart.DEFAULT,
                                           block: suspend CoroutineScope.() -> T): Deferred<T> {
-    val result = async(UI_POOL, start, block)
+
+    val result = UI_POOL.async(start = start, block =  block)
     result.bind(this)
     return result
 }

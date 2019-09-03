@@ -41,8 +41,6 @@ android {
         encoding "UTF-8"
     }
 
-    kotlin { experimental { coroutines 'enable' } }
-
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/LICENSE'

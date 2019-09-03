@@ -15,7 +15,8 @@ import com.androidkotlincore.mvp.impl.MVPLogger.log
 import com.androidkotlincore.mvp.impl.permissions.OnRequestPermissionsResultEvent
 import com.androidkotlincore.mvp.impl.permissions.PermissionsManager
 import com.androidkotlincore.mvp.impl.permissions.PermissionsManagerDelegate
-import kotlinx.coroutines.experimental.suspendCancellableCoroutine
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.suspendCancellableCoroutine
 
 /**
  * Created by Peter on 06.01.2017.
@@ -155,8 +156,8 @@ abstract class BaseMVPPresenterImpl<TPresenter, TView>(
      * */
     override suspend fun getView(): TView {
         return mvpView.value ?: suspendCancellableCoroutine { continuation ->
-            mvpView { continuation.resume(it) }
-            addJob(continuation)
+            mvpView { continuation.resumeWith(Result.success(it)) }
+//            addJob(continuation)
         }
     }
 

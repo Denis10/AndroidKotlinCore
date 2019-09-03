@@ -12,8 +12,9 @@ import com.google.android.gms.auth.api.signin.*
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import kotlinx.coroutines.experimental.suspendCancellableCoroutine
+import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject
+import kotlin.coroutines.resumeWithException
 
 /**
  * Created by Peter on 05.02.2018.
@@ -39,7 +40,7 @@ class GoogleSignInServiceImpl @Inject constructor(ctx: Context, convertersContex
                     Auth.GoogleSignInApi.getSignInResultFromIntent(result)
                     GoogleSignIn.getSignedInAccountFromIntent(result).addOnCompleteListener {
                         when {
-                            it.isSuccessful -> continuation.resume(it.result)
+                            it.isSuccessful -> continuation.resumeWith(Result.success(it.result))
                             //TODO: ApiException: 12502 - SignIn in progress after screen rotating
                             else -> continuation.resumeWithException(it.exception
                                     ?: IllegalStateException("getSignedInAccountFromIntent() unknown error"))
@@ -52,7 +53,7 @@ class GoogleSignInServiceImpl @Inject constructor(ctx: Context, convertersContex
         val authResult = suspendCancellableCoroutine<AuthResult> { continuation ->
             firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
                 when {
-                    it.isSuccessful -> continuation.resume(it.result)
+                    it.isSuccessful -> continuation.resumeWith(Result.success(it.result))
                     else -> continuation.resumeWithException(it.exception
                             ?: IllegalStateException("signInWithCredential() unknown error"))
                 }
@@ -67,7 +68,7 @@ class GoogleSignInServiceImpl @Inject constructor(ctx: Context, convertersContex
         suspendCancellableCoroutine<Unit> { continuation ->
             googleSignInClient.signOut().addOnCompleteListener {
                 when {
-                    it.isSuccessful -> continuation.resume(Unit)
+                    it.isSuccessful -> continuation.resumeWith(Result.success(Unit))
                     else -> continuation.resumeWithException(it.exception
                             ?: IllegalStateException("signOut() unknown error"))
                 }
