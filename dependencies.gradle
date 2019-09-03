@@ -4,14 +4,14 @@ def versions = [:]
 def deps = [:]
 
 //=============================================== MODULES===========================================
-//deps.mvp_rx1 = project(":mvp-rx1")
-deps.mvp_rx1 = 'com.androidkotlincore:mvp-rx1:0.0.9'
+deps.mvp_rx1 = project(":mvp-rx1")
+//deps.mvp_rx1 = 'com.androidkotlincore:mvp-rx1:0.0.9'
 
-//deps.mvp_rx = project(":mvp-rx2")
-deps.mvp_rx = 'com.androidkotlincore:mvp-rx:0.0.9'
+deps.mvp_rx = project(":mvp-rx2")
+//deps.mvp_rx = 'com.androidkotlincore:mvp-rx:0.0.9'
 //
-//deps.mvp = project(":mvp")
-deps.mvp = 'com.androidkotlincore:mvp:0.0.9'
+deps.mvp = project(":mvp")
+//deps.mvp = 'com.androidkotlincore:mvp:0.0.9'
 //
 //deps.entityconverter = project(":entityconverter")
 deps.entityconverter = 'com.androidkotlincore:entityconverter:0.0.4'
@@ -65,6 +65,14 @@ playServices.firebase_core = "com.google.firebase:firebase-core:$versions.fireba
 playServices.firebase_auth = "com.google.firebase:firebase-auth:$versions.firebase"
 playServices.firebase_auth_service = "com.google.android.gms:play-services-auth:$versions.firebase"
 
+//todo update later
+//versions.firebase = '17.2.0'
+//versions.firebase_auth = '19.0.0'
+//versions.firebase_auth_service = '17.0.0'
+//playServices.firebase_core = "com.google.firebase:firebase-core:$versions.firebase"
+//playServices.firebase_auth = "com.google.firebase:firebase-auth:$versions.firebase_auth"
+//playServices.firebase_auth_service = "com.google.android.gms:play-services-auth:$versions.firebase_auth_service"
+
 deps.playServices = playServices
 
 //============================================== KOTLIN ============================================
@@ -75,7 +83,7 @@ kotlin.test = "org.jetbrains.kotlin:kotlin-test-junit:$versions.kotlin"
 kotlin.gradle_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
 deps.kotlin = kotlin
 
-versions.coroutines = '0.22.3'
+versions.coroutines = '1.2.2'
 def coroutines = [:]
 coroutines.core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
 coroutines.android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
