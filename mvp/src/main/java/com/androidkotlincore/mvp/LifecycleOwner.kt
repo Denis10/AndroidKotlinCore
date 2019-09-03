@@ -1,6 +1,6 @@
 package com.androidkotlincore.mvp
 
-import android.arch.lifecycle.Lifecycle
+import androidx.lifecycle.Lifecycle
 import com.androidkotlincore.mvp.addons.CompositeEventListener
 import com.androidkotlincore.mvp.impl.permissions.OnRequestPermissionsResultEvent
 

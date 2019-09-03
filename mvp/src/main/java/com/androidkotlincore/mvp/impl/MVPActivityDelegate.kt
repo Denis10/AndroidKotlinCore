@@ -2,7 +2,7 @@ package com.androidkotlincore.mvp.impl
 
 import android.content.Context
 import android.os.Build
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.androidkotlincore.mvp.MVPPresenter
 import com.androidkotlincore.mvp.MVPView
 import com.androidkotlincore.mvp.impl.permissions.OnRequestPermissionsResultEvent

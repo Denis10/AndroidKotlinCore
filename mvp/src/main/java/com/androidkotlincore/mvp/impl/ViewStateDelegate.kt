@@ -1,6 +1,6 @@
 package com.androidkotlincore.mvp.impl
 
-import android.arch.lifecycle.Lifecycle
+import androidx.lifecycle.Lifecycle
 import com.androidkotlincore.mvp.MVPPresenter
 import com.androidkotlincore.mvp.MVPView
 import java.util.*

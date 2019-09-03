@@ -1,7 +1,7 @@
 package com.androidkotlincore.sample.presentation.base
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.androidkotlincore.mvp.MVPPresenter
 import com.androidkotlincore.mvp.MVPView
 import com.androidkotlincore.mvp.impl.BaseMVPActivity

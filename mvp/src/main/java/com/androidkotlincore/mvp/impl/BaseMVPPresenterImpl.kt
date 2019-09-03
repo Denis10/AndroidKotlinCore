@@ -1,9 +1,9 @@
 package com.androidkotlincore.mvp.impl
 
-import android.arch.lifecycle.Lifecycle
 import android.os.Handler
 import android.os.Looper
-import android.support.annotation.CallSuper
+import androidx.annotation.CallSuper
+import androidx.lifecycle.Lifecycle
 import com.androidkotlincore.mvp.MVPPresenter
 import com.androidkotlincore.mvp.MVPView
 import com.androidkotlincore.mvp.OnActivityResultEvent
@@ -15,7 +15,6 @@ import com.androidkotlincore.mvp.impl.MVPLogger.log
 import com.androidkotlincore.mvp.impl.permissions.OnRequestPermissionsResultEvent
 import com.androidkotlincore.mvp.impl.permissions.PermissionsManager
 import com.androidkotlincore.mvp.impl.permissions.PermissionsManagerDelegate
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 /**

@@ -120,12 +120,9 @@ dependencies {
     implementation deps.mvp
 
     //support
-    implementation deps.support.appcompat
-    implementation deps.support.design
-    implementation deps.support.cardview
-    implementation deps.support.annotations
-    implementation deps.support.recyclerview
-    implementation deps.support.constraintLayout
+    implementation deps.androidx.constraintLayout
+    implementation deps.androidx.material
+    kapt deps.androidx.lifecycle
 
     //firebase
     implementation deps.playServices.firebase_core
