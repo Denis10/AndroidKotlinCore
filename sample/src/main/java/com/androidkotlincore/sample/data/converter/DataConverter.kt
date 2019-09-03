@@ -17,13 +17,13 @@ class DataConverter : ConvertersContextRegistrationCallback {
 
     private fun googleAuthResultToSignInResult(authResult: AuthResult): SignInResultImpl {
         return SignInResultImpl(
-                isNewUser = authResult.additionalUserInfo.isNewUser,
-                userName = authResult.additionalUserInfo.username,
-                providerId = authResult.user.providerId,
-                email = authResult.user.email,
-                displayName = authResult.user.displayName,
-                uid = authResult.user.uid,
-                phoneNumber = authResult.user.phoneNumber
+                isNewUser = authResult.additionalUserInfo?.isNewUser ?: false,
+                userName = authResult.additionalUserInfo?.username,
+                providerId = authResult.user?.providerId.orEmpty(),
+                email = authResult.user?.email,
+                displayName = authResult.user?.displayName,
+                uid = authResult.user?.uid.orEmpty(),
+                phoneNumber = authResult.user?.phoneNumber
         )
     }
 }
