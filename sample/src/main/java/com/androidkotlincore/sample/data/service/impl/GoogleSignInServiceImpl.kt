@@ -40,7 +40,7 @@ class GoogleSignInServiceImpl @Inject constructor(ctx: Context, convertersContex
                     Auth.GoogleSignInApi.getSignInResultFromIntent(result)
                     GoogleSignIn.getSignedInAccountFromIntent(result).addOnCompleteListener {
                         when {
-                            it.isSuccessful -> continuation.resumeWith(Result.success(it.result))
+                            it.isSuccessful -> continuation.resumeWith(Result.success(requireNotNull(it.result)))
                             //TODO: ApiException: 12502 - SignIn in progress after screen rotating
                             else -> continuation.resumeWithException(it.exception
                                     ?: IllegalStateException("getSignedInAccountFromIntent() unknown error"))
@@ -53,7 +53,7 @@ class GoogleSignInServiceImpl @Inject constructor(ctx: Context, convertersContex
         val authResult = suspendCancellableCoroutine<AuthResult> { continuation ->
             firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
                 when {
-                    it.isSuccessful -> continuation.resumeWith(Result.success(it.result))
+                    it.isSuccessful -> continuation.resumeWith(Result.success(requireNotNull(it.result)))
                     else -> continuation.resumeWithException(it.exception
                             ?: IllegalStateException("signInWithCredential() unknown error"))
                 }
