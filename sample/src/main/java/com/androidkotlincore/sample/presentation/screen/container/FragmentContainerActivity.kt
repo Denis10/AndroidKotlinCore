@@ -1,7 +1,7 @@
 package com.androidkotlincore.sample.presentation.screen.container
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.androidkotlincore.sample.R
 import com.androidkotlincore.sample.presentation.base.BaseActivity
 

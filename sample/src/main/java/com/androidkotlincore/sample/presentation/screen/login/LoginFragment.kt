@@ -1,10 +1,10 @@
 package com.androidkotlincore.sample.presentation.screen.login
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.view.View
 import com.androidkotlincore.sample.R
 import com.androidkotlincore.sample.presentation.base.BaseFragment
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_login.*
 
 /**

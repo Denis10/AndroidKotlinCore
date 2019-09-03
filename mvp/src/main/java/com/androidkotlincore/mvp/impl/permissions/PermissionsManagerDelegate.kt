@@ -1,10 +1,10 @@
 package com.androidkotlincore.mvp.impl.permissions
 
 import android.app.Activity
-import android.app.Fragment
 import android.content.pm.PackageManager
 import android.os.Build
-import android.support.annotation.UiThread
+import androidx.annotation.UiThread
+import androidx.fragment.app.Fragment
 import com.androidkotlincore.mvp.addons.CompositeEventListener
 import com.androidkotlincore.mvp.addons.awaitFirst
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger
 /**
  * Created by Peter on 19.01.18.
  */
-typealias SupportFragment = android.support.v4.app.Fragment
+typealias SupportFragment = android.app.Fragment
 
 /**
  * Delegate for [PermissionsManager]

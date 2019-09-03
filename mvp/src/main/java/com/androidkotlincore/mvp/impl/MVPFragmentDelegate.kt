@@ -2,8 +2,8 @@ package com.androidkotlincore.mvp.impl
 
 import android.content.Context
 import android.os.Build
-import android.support.v4.app.BackStackAccessor
-import android.support.v4.app.Fragment
+import androidx.fragment.app.BackStackAccessor
+import androidx.fragment.app.Fragment
 import com.androidkotlincore.mvp.MVPPresenter
 import com.androidkotlincore.mvp.MVPView
 import com.androidkotlincore.mvp.impl.permissions.OnRequestPermissionsResultEvent

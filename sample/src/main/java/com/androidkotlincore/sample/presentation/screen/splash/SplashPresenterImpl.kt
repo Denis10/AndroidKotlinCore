@@ -1,6 +1,6 @@
 package com.androidkotlincore.sample.presentation.screen.splash
 
-import android.arch.lifecycle.Lifecycle
+import androidx.lifecycle.Lifecycle
 import com.androidkotlincore.mvp.impl.launchCoroutineUI
 import com.androidkotlincore.sample.presentation.base.BasePresenterImpl
 import kotlinx.coroutines.Job

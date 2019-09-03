@@ -1,11 +1,11 @@
 package com.androidkotlincore.mvp.impl
 
-import android.arch.lifecycle.GenericLifecycleObserver
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleOwner
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.GenericLifecycleObserver
+import androidx.lifecycle.Lifecycle
 import com.androidkotlincore.mvp.*
 import com.androidkotlincore.mvp.addons.CompositeEventListener
 import com.androidkotlincore.mvp.addons.EmitableCompositeEventListener
@@ -29,6 +29,7 @@ import com.androidkotlincore.mvp.impl.permissions.OnRequestPermissionsResultEven
  * @property viewPersistenceStorage - [Bundle] from view with key-value pairs
  * @property presenterId - initial presenter id
  */
+@SuppressLint("RestrictedApi")
 abstract class AbstractMVPDelegate<TPresenter, TView>(private val presentersStorage: PresentersStorage<TPresenter, TView>) :
         GenericLifecycleObserver,
         MVPView<TView, TPresenter>
@@ -55,7 +56,10 @@ abstract class AbstractMVPDelegate<TPresenter, TView>(private val presentersStor
      * */
     protected fun init(view: MVPView<TView, TPresenter>) {
         this.view = view
-        if (view is LifecycleOwner) view.getLifecycle().addObserver(this)
+        view.lifecycle.subscribe {
+
+        }
+        if (view is androidx.lifecycle.LifecycleOwner) view.getLifecycle().addObserver(this)
         else throw IllegalStateException("$view must implement ${LifecycleOwner::class.java.name} interface!")
     }
 
@@ -113,7 +117,7 @@ abstract class AbstractMVPDelegate<TPresenter, TView>(private val presentersStor
     /**
      * @see [GenericLifecycleObserver.onStateChanged]
      * */
-    override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+    override fun onStateChanged(source: androidx.lifecycle.LifecycleOwner, event: Lifecycle.Event) {
         log("#STATE_CHANGED# ${view.javaClass.name} -> $event")
         presenter //presenter must be initialized here
 
